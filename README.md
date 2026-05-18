@@ -6,17 +6,36 @@ Slack channel every evening so you can correct anything Claude got wrong.
 
 | When | What |
 |---|---|
-| **04:00 Asia/Jakarta, Mon–Fri** | Read last 48h of every channel you're in. Auto-create tasks for high-confidence commitments; auto-complete tasks for high-confidence deliveries; queue ambiguous items for evening review. |
-| **18:00 Asia/Jakarta, daily** | Post a digest in `#claude-tasks`: today's auto-actions + the ambiguous items with ✅ / ❌ / 📥 reaction prompts. Apply your reactions to ClickUp. |
+| **04:00 Asia/Jakarta, Mon–Fri** | Scan last 48h of every channel you're active in, classify candidates, post a **review table** in `#claude-tasks`. Does NOT write to ClickUp. |
+| **18:00 Asia/Jakarta, daily** | Light nudge if rows are still pending. Skipped silently if queue is empty. |
+| **On-demand** (`slack-push-now`) | Reads your reply commands in the digest thread, pushes approved rows to ClickUp, posts confirmation. Fire it whenever you've replied with `push` / `skip` / `inbox` / `undo`. |
+
+## Reply-command syntax
+
+In the morning digest thread, reply with any combination of:
+
+- `push 1 3 5` — push those rows to ClickUp using their mapped list
+- `push all` — push every pending row
+- `push all high` / `push all low` — confidence filter
+- `inbox 4` — push row 4 but force list = **Claude Inbox**
+- `skip 2 6` — drop those rows from the queue
+- `skip all low` — discard everything low-confidence
+- `undo <task-link>` — revert a previously-pushed task (deletes a CREATE, reopens a COMPLETE)
+
+Multiple replies are unioned; later commands override earlier ones for the same row. Then fire `slack-push-now` to apply.
+
+Unactioned rows roll into tomorrow's digest with a fresh row index. After **7 days** with no command, they expire silently.
 
 ## Repo layout
 ```
-triggers/morning-review.md     Prompt for the 04:00 session
-triggers/evening-reminder.md   Prompt for the 18:00 session
+triggers/morning-review.md     Prompt for the 04:00 scheduled session (table + queue)
+triggers/push-now.md           Prompt for the on-demand push trigger
+triggers/evening-reminder.md   Prompt for the 18:00 scheduled nudge
 config/channels.yml            Slack channel ID → ClickUp list mapping
 config/identity.yml            Your Slack user ID, teammate IDs, ClickUp workspace + Claude Inbox list IDs
-state/processed.jsonl          Append-only ledger of (slack ts → clickup task id) for dedup
-state/pending-review.json      Low-confidence items waiting for 18:00 review
+state/processed.jsonl          Append-only ledger of (slack ts → clickup task id) for dedup + audit
+state/pending-review.json      All rows awaiting your push / skip command
+state/last-digest.json         Today's digest message ts + row→pending_id map, used by push-now
 ```
 
 State files live in git on branch `claude/slack-reader-workflow-t1njI` because the
@@ -51,29 +70,23 @@ Run the bootstrap routine:
    and push to claude/slack-reader-workflow-t1njI.
 ```
 
-### 4. Schedule the two triggers in Claude Code on the web
-On the web app, create two scheduled triggers on this repo + branch:
+### 4. Create the three triggers in Claude Code on the web
+On the web app, create three triggers on this repo + branch:
 
-| Trigger name | Cron (Asia/Jakarta) | Prompt source |
+| Trigger name | Schedule | Prompt source |
 |---|---|---|
-| `slack-morning-review` | `0 4 * * 1-5` | contents of `triggers/morning-review.md` |
-| `slack-evening-reminder` | `0 18 * * *` | contents of `triggers/evening-reminder.md` |
+| `slack-morning-review` | Cron `0 4 * * 1-5` (Asia/Jakarta) | `triggers/morning-review.md` |
+| `slack-push-now` | **On-demand** (no cron) | `triggers/push-now.md` |
+| `slack-evening-reminder` | Cron `0 18 * * *` (Asia/Jakarta) | `triggers/evening-reminder.md` |
 
-### 5. Dry-run before going live
-Before scheduling the morning trigger, run `triggers/morning-review.md` manually
-once with `DRY_RUN=true` set at the top of the prompt. It will log what it
-*would* do without touching ClickUp, and post the same summary to
-`#claude-tasks` so you can sanity-check.
+### 5. First-run check
+Fire `slack-morning-review` manually once and confirm it posts a table in `#claude-tasks` and **does not** write to ClickUp. Reply with a test command (e.g. `skip 1`) and fire `slack-push-now` to confirm the round-trip works. Schedule the crons after that.
 
 ## Day-to-day use
-- **Morning:** glance at the `#claude-tasks` summary on your phone.
-- **Evening:** the digest will tag low-confidence items. React:
-  - ✅ → confirm and create/complete in ClickUp
-  - ❌ → discard
-  - 📥 → send to Claude Inbox for later triage
-- **Correction:** if the morning run created a bad task, reply in the digest
-  thread with `undo <task-link>`. The next 18:00 run will revert it.
+- **Morning:** glance at the digest table in `#claude-tasks` on your phone. Reply with `push 1 3` / `skip 2` / `inbox 4` whenever.
+- **Push:** fire `slack-push-now` (one tap in the web UI) and Claude does the ClickUp writes + posts a confirmation back in the thread.
+- **Evening nudge:** if you forgot to push, the 18:00 trigger sends a short reminder.
+- **Correction:** to revert a previously-pushed task, reply `undo <task-link>` and re-fire `slack-push-now`.
 
 ## Stopping the workflow
-Pause or delete the two scheduled triggers in the Claude Code on the web UI.
-The repo and state stay intact, so you can resume any time.
+Pause or delete the three triggers in the Claude Code on the web UI. The repo and state stay intact, so you can resume any time.
