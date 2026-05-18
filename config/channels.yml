@@ -1,16 +1,255 @@
 # Slack channel ID → ClickUp list ID
 #
-# Edit this file (manually or via the bootstrap session) to route specific
-# channels to specific ClickUp lists. Channels not listed here fall back to
-# `claude_inbox_list_id` from config/identity.yml.
+# Edit this file to route specific channels to specific ClickUp lists.
+# Channels not listed here fall back to `claude_inbox_list_id` from
+# config/identity.yml (Claude Inbox, list 901113803597).
+#
+# To get a Slack channel ID: open the channel in Slack → click the channel
+# name at the top → scroll to the bottom of the About tab → copy "Channel ID".
 #
 # Example:
 # mappings:
-#   C0123456789:           # #client-acme
-#     list_id: "9012345"
-#     list_name: "Acme"
-#   C0987654321:           # #project-phoenix
-#     list_id: "9098765"
-#     list_name: "Phoenix"
+#   C0123456789:                 # #client-acme
+#     list_id: "901112473057"
+#     list_name: "ShipScience / Design Tasks"
 
 mappings: {}
+
+# -----------------------------------------------------------------------------
+# Reference: client folders discovered in your ClickUp workspace (9011424132)
+# Use these list IDs when mapping Slack channels.
+# Each client folder usually has: Design Tasks, Paid Search, Paid Social /
+# LinkedIn / Meta Ads, and sometimes GTMe Tasks. Pick the one that best
+# matches what your Slack channel typically discusses.
+# -----------------------------------------------------------------------------
+# Aphex Test 3                   folder 90117351640
+#   Design Tasks                 901112561754
+#   LinkedIn                     901112561743
+#   Meta Ads                     901112561742
+#   Paid Search                  901112561745
+# Archetype Permanent Solutions  folder 90117356678
+#   Design Tasks                 901112574201
+#   GTMe Tasks                   901112574207
+#   LinkedIn                     901112574205
+#   Meta Ads                     901112574202
+#   Paid Search                  901112574203
+#   Reddit Ads                   901112574206
+# Archive Technologies, Inc.     folder 90117933467
+#   Paid Search                  901113700678
+#   LinkedIn                     901113700677
+#   Meta Ads                     901113700676
+#   Design Tasks                 901113700680
+#   Paid Social                  901113801558
+# Conduit                        folder 90117305879
+#   Design Tasks                 901112473034
+#   LinkedIn                     901112473033
+#   Meta Ads                     901112473046
+#   Paid Search                  901112473035
+#   Reddit Ads                   901112473036
+# Cowen Partners                 folder 90117067726
+#   Design Tasks                 901111999136
+#   Search                       901111999138
+#   Social                       901112995782
+#   Data                         901113420155
+# Crelate                        folder 90116201600
+#   Design Tasks                 901110688668
+#   Paid Search                  901110688669
+#   Paid Social                  901110688675
+# Doppel                         folder 90117297161
+#   Design Tasks                 901112453953
+#   Paid Search                  901112453954
+#   Paid Social                  901112453963
+# Expensify                      folder 90116438587
+#   GTMe Tasks                   901111239931
+# Filed                          folder 90117305900
+#   Design Tasks                 901112473118
+#   GTMe Tasks                   901112512651
+#   LinkedIn                     901112473121
+#   Meta Ads                     901112473120
+#   Paid Search                  901112473119
+#   Reddit Ads                   901112473122
+# FinOut                         folder 90116526843
+#   GTMe Tasks                   901111465755
+# GrowthX                        folder 90117305904
+#   Design Tasks                 901112473136
+#   GTMe Tasks                   901112512659
+#   LinkedIn                     901112473139
+#   Meta Ads                     901112473138
+#   Paid Search                  901112473137
+#   Reddit Ads                   901112473140
+# HapilyInc                      folder 90117356673
+#   Design Tasks                 901112574188
+#   GTMe Tasks                   901112574191
+#   Paid Social                  901112574192
+#   Paid Search                  901112574190
+# Hiver                          folder 90117305893
+#   Design Tasks                 901112473083
+#   Paid Search                  901112473084
+#   Paid Social                  901112473086
+# Hyperbound                     folder 90115801312
+#   Design Tasks                 901109788621
+#   LinkedIn                     901109788622
+#   Paid Search                  901109788623
+# Intrusion                      folder 90117156460
+#   Paid Search                  901112167219
+#   Paid Social                  901112481390
+# Knit                           folder 90116521219
+#   Paid Search                  901111580750
+#   Paid Social                  901111847834
+#   Design Tasks                 901113587294
+# Lightfield                     folder 90117851956
+#   Design Tasks                 901113533950
+#   Social                       901113533921
+#   Search                       901113533922
+# Monograph                      folder 90116485888
+#   Design Tasks                 901111359459
+#   Social                       901111359458
+#   Search                       901111359451
+# Northbeam                      folder 90117571228
+#   Paid Search                  901113063137
+#   GTMe Tasks                   901113618652
+#   Paid Social                  901113063136
+#   Design Tasks                 901113063151
+# Nylas                          folder 90113720393  (note: also referenced as 90113080393 — verify)
+#   Design Tasks                 901109079243
+#   Paid Social                  901111849162
+#   Paid Search                  901105471581
+# Optiversal                     folder 90117380019
+#   Design Tasks                 901112638060
+#   GTMe Tasks                   901112638058
+#   LinkedIn                     901112638056
+#   Meta Ads                     901112638061
+#   Paid Search                  901112638059
+#   Reddit Ads                   901112638057
+#   Paid Social                  901112757932
+# Operatus                       folder 90117531518
+#   List                         901112985670
+#   GTMe Tasks                   901113088729
+#   LinkedIn Content             901113175250
+# Patient Now                    folder 90117356659
+#   Design Tasks                 901112574163
+#   GTMe Tasks                   901112574166
+#   LinkedIn                     901112574161
+#   Meta Ads                     901112574165
+#   Paid Search                  901112574164
+#   Reddit Ads                   901112574162
+# PlayerZero                     folder 90117477113
+#   Design Tasks                 901112870198
+#   GTMe Tasks                   901112870203
+#   Social                       901112870200
+#   Search                       901112870201
+# Prelude                        folder 90117305903
+#   Design Tasks                 901112473131
+#   GTMe Tasks                   901112512654
+#   LinkedIn                     901112473134
+#   Meta Ads                     901112473133
+#   Paid Search                  901112473132
+#   Reddit Ads                   901112473135
+# Prospeo                        folder 90117305895
+#   Design Tasks                 901112473091
+#   Social                       901112473094
+#   Search                       901112473092
+# RB2B                           folder 90117858380
+#   GTMe Tasks                   901113547175
+#   Paid Search                  901113589921
+#   Meta Ads                     901113715526
+# Recharge                       folder 90116433248
+#   Design Tasks                 901111228045
+#   Search                       901111228048
+#   Paid Social                  901112552253
+#   Review & Strategy            901111228046
+# RemoFirst                      folder 90113720393
+#   Design Tasks                 901109079322
+#   Paid Search                  901106474422
+#   Review & Strategy            901106474418
+# Retention.com                  folder 90117732869
+#   GTMe Tasks                   901113320832
+#   Search                       901113720086
+# Riipen                         folder 90117673976
+#   Paid Search                  901113252504
+#   LinkedIn                     901113252503
+#   Design Tasks                 901113252506
+# Rise Vision                    folder 90117939902
+#   Paid Search                  901113713912
+#   LinkedIn                     901113713916
+#   Meta Ads                     901113713911
+#   Design Tasks                 901113713914
+# Sanity US Inc.                 folder 90117664893
+#   Paid Search                  901113236019
+#   LinkedIn                     901113236018
+#   Meta Ads                     901113236017
+#   Design Tasks                 901113236030
+# Sharegate                      folder 90117305909
+#   Design Tasks                 901112473152
+#   GTMe Tasks                   901112512682
+#   LinkedIn                     901112473155
+#   Meta Ads                     901112473154
+#   Paid Search                  901112473153
+#   Reddit Ads                   901112473157
+# ShipScience                    folder 90117305884
+#   Design Tasks                 901112473057
+#   Search                       901112473056
+#   Paid Social                  901112473059
+# Span                           folder 90117582343
+#   Paid Search                  901113083684
+#   LinkedIn                     901113083682
+#   Meta Ads                     901113083681
+#   Design Tasks                 901113083699
+# Stuut                          folder 90117931092
+#   Paid Search                  901113696036
+#   Paid Social                  901113789827
+#   LinkedIn                     901113696039
+#   Meta Ads                     901113696037
+#   Design Tasks                 901113696038
+# Trackstreet                    folder 90117305899
+#   Design Tasks                 901112473113
+#   GTMe Tasks                   901112512636
+#   LinkedIn                     901112473115
+#   Meta Ads                     901112473114
+#   Paid Search                  901112473112
+#   Reddit Ads                   901112473116
+# UserEvidence                   folder 90115719148
+#   Design Tasks                 901109622809
+#   Social                       901109622810
+#   Search                       901109622804
+# Vicarius                       folder 90115704887
+#   Design Tasks                 901109594995
+#   Paid Social                  901109594994
+#   Paid Search                  901109594996
+# Warespace                      folder 90117314751
+#   Design Tasks                 901112488801
+#   GTMe Tasks                   901112512684
+#   LinkedIn                     901112488804
+#   Meta Ads                     901112488803
+#   Paid Search                  901112488802
+#   Reddit Ads                   901112488805
+# World50                        folder 90117305907
+#   Design Tasks                 901112473143
+#   GTMe Tasks                   901112512678
+#   LinkedIn                     901112473146
+#   Meta Ads                     901112473145
+#   Paid Search                  901112473144
+#   Reddit Ads                   901112473147
+# Zapier                         folder 90117633717
+#   GTMe Tasks                   901113178202
+# Rep AI Technologies            folder 90117633739
+#   GTMe Tasks                   901113178263
+# Arcoro Holdings Corp           folder 90117732909
+#   GTMe Tasks                   901113320881
+# Revic                          folder 90117732910
+#   GTMe Tasks                   901113320882
+# Superposition AI               folder 90117844443
+#   GTMe Tasks                   901113519419
+# Superposition                  folder 90117862154
+#   List                         901113554700
+# Robocent Inc                   folder 90117979339
+#   GTMe Tasks                   901113800643
+#   Ramp up - Rejoice            901113800812
+# Lightfield                     folder 90117851956   (duplicate of above)
+#
+# Non-client / internal lists:
+#   Client Management            901105713277  (Client Folders space root)
+#   Campaign Brief & Intake Form 901112740595  (Client Folders space root)
+#   Design Team Tasks            901110748293  (Client Folders space root)
+#   Claude Projects              901111753857  (Resources Library)
+#   Claude Inbox                 901113803597  (Resources Library)  ← fallback

@@ -13,8 +13,9 @@ internal_teammate_ids: []
 review_channel_id: ""
 
 # ClickUp workspace (team) ID.
-clickup_workspace_id: ""
+clickup_workspace_id: "9011424132"
 
 # ClickUp list ID for the "Claude Inbox" triage list. Fallback when a Slack
 # channel isn't in config/channels.yml.
-claude_inbox_list_id: ""
+# URL: https://app.clickup.com/9011424132/v/l/li/901113803597
+claude_inbox_list_id: "901113803597"
