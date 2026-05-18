@@ -1,0 +1,20 @@
+# Filled in by the bootstrap session — see README.md.
+# Until these are populated, the morning + evening triggers will halt and
+# post a setup-needed message to the review channel.
+
+# Your Slack user ID (looks like "U01ABCDEFGH"). Used to detect when YOU say "yes".
+my_slack_user_id: ""
+
+# Slack user IDs of internal teammates whose "yes" also counts as a commitment.
+# Leave as [] if you want only your own affirmatives to trigger task creation.
+internal_teammate_ids: []
+
+# Slack channel ID for #claude-tasks (the private review channel).
+review_channel_id: ""
+
+# ClickUp workspace (team) ID.
+clickup_workspace_id: ""
+
+# ClickUp list ID for the "Claude Inbox" triage list. Fallback when a Slack
+# channel isn't in config/channels.yml.
+claude_inbox_list_id: ""

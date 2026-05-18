@@ -1,0 +1,16 @@
+# Slack channel ID → ClickUp list ID
+#
+# Edit this file (manually or via the bootstrap session) to route specific
+# channels to specific ClickUp lists. Channels not listed here fall back to
+# `claude_inbox_list_id` from config/identity.yml.
+#
+# Example:
+# mappings:
+#   C0123456789:           # #client-acme
+#     list_id: "9012345"
+#     list_name: "Acme"
+#   C0987654321:           # #project-phoenix
+#     list_id: "9098765"
+#     list_name: "Phoenix"
+
+mappings: {}
