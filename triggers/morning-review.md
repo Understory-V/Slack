@@ -164,14 +164,13 @@ Commands:
 ```
 
 Then post **one numbered threaded reply per row** with the full context (so you
-can read context before approving):
+can read context before approving). **Each threaded reply must be a single
+paragraph** — no blank lines, no URLs on their own line. The Slack MCP
+connector rejects multi-paragraph threaded replies that contain URLs with
+`invalid_blocks`. Inline the permalink in the prose. Use this shape:
 
 ```
-{row_index}. [{confidence} · {action}] {summary}
-→ Slack: {permalink}
-→ Would create in: {list_name}
-{Full description that would go into ClickUp, including the ask quote,
-the affirmation quote, due date if any, and Slack permalinks.}
+Row {n}, {confidence} confidence, {action}: {title}. Thread: {permalink} — would create in {list_name}. {Due-date line if any.} Ask from {requester}: "{ask quote}". {Affirmer}: "{affirmative quote}". {Brief context paragraph with key numbers / scope.}
 ```
 
 ## Step 8 — Persist state
