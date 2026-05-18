@@ -9,6 +9,7 @@ Slack channel every evening so you can correct anything Claude got wrong.
 | **04:00 Asia/Jakarta, Mon–Fri** | Scan last 48h of every channel you're active in, classify candidates, post a **review table** in `#claude-tasks`. Does NOT write to ClickUp. |
 | **18:00 Asia/Jakarta, daily** | Light nudge if rows are still pending. Skipped silently if queue is empty. |
 | **On-demand** (`slack-push-now`) | Reads your reply commands in the digest thread, pushes approved rows to ClickUp, posts confirmation. Fire it whenever you've replied with `push` / `skip` / `inbox` / `undo`. |
+| **On-demand** (`slack-command`) | Reads any plain-text instructions you've posted in `#claude-tasks` and acts on them — create a recurring task, update a channel mapping, undo a task, edit config, ask "what's pending". Marks each handled message with `:claude_done:` so it isn't re-processed. |
 
 ## Reply-command syntax
 
@@ -30,6 +31,7 @@ Unactioned rows roll into tomorrow's digest with a fresh row index. After **7 da
 ```
 triggers/morning-review.md     Prompt for the 04:00 scheduled session (table + queue)
 triggers/push-now.md           Prompt for the on-demand push trigger
+triggers/slack-command.md      Prompt for the on-demand "talk to your automation" trigger
 triggers/evening-reminder.md   Prompt for the 18:00 scheduled nudge
 config/channels.yml            Slack channel ID → ClickUp list mapping
 config/identity.yml            Your Slack user ID, teammate IDs, ClickUp workspace + Claude Inbox list IDs
@@ -78,15 +80,23 @@ On the web app, create three triggers on this repo + branch:
 | `slack-morning-review` | Cron `0 4 * * 1-5` (Asia/Jakarta) | `triggers/morning-review.md` |
 | `slack-push-now` | **On-demand** (no cron) | `triggers/push-now.md` |
 | `slack-evening-reminder` | Cron `0 18 * * *` (Asia/Jakarta) | `triggers/evening-reminder.md` |
+| `slack-command` | **On-demand** (no cron) | `triggers/slack-command.md` |
 
 ### 5. First-run check
 Fire `slack-morning-review` manually once and confirm it posts a table in `#claude-tasks` and **does not** write to ClickUp. Reply with a test command (e.g. `skip 1`) and fire `slack-push-now` to confirm the round-trip works. Schedule the crons after that.
 
 ## Day-to-day use
 - **Morning:** glance at the digest table in `#claude-tasks` on your phone. Reply with `push 1 3` / `skip 2` / `inbox 4` whenever.
-- **Push:** fire `slack-push-now` (one tap in the web UI) and Claude does the ClickUp writes + posts a confirmation back in the thread.
+- **Push:** fire `slack-push-now` and Claude does the ClickUp writes + posts a confirmation back in the thread.
+- **Ad-hoc requests:** write plain-text instructions in `#claude-tasks` (e.g. *"create a recurring Wednesday standup task for Revic"*) and fire `slack-command`. Claude reads the channel, acts, and reacts `:claude_done:` on the message.
 - **Evening nudge:** if you forgot to push, the 18:00 trigger sends a short reminder.
 - **Correction:** to revert a previously-pushed task, reply `undo <task-link>` and re-fire `slack-push-now`.
 
+### A note on `@Claude` mentions
+If you have Anthropic's official Slack app installed in your workspace, mentioning `@Claude` will trigger a generic chat reply from that app — it has **no access** to this repo, your ClickUp, or the automation state. The right way to give the automation instructions is to post plain text in `#claude-tasks` and fire `slack-command`. No mention required.
+
+### Recurring tasks
+The ClickUp MCP tool doesn't expose ClickUp's native recurrence field. When you ask for a recurring task, Claude will create it once, embed the recurrence rule in the task description, tag it `recurring:pending-setup`, and remind you to flip the "Repeat" toggle in ClickUp's right sidebar once. After that, ClickUp handles all future occurrences natively.
+
 ## Stopping the workflow
-Pause or delete the three triggers in the Claude Code on the web UI. The repo and state stay intact, so you can resume any time.
+Pause or delete the four triggers in the Claude Code on the web UI. The repo and state stay intact, so you can resume any time.
