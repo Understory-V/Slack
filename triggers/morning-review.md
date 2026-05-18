@@ -163,15 +163,13 @@ Commands:
 • `undo <task-link>` — revert a previously-pushed task
 ```
 
-Then post **one numbered threaded reply per row** with the full context (so you
-can read context before approving). **Each threaded reply must be a single
-paragraph** — no blank lines, no URLs on their own line. The Slack MCP
-connector rejects multi-paragraph threaded replies that contain URLs with
-`invalid_blocks`. Inline the permalink in the prose. Use this shape:
+**That's it — no threaded replies.** The table summary plus the inline slack link
+is enough context. The user wants to scan the table and reply directly in the
+thread with commands like `push 1 3 5` or `skip 2`. Don't pollute the thread
+with one-paragraph-per-row context replies.
 
-```
-Row {n}, {confidence} confidence, {action}: {title}. Thread: {permalink} — would create in {list_name}. {Due-date line if any.} Ask from {requester}: "{ask quote}". {Affirmer}: "{affirmative quote}". {Brief context paragraph with key numbers / scope.}
-```
+If a row's summary in the table can't fit the key context in ≤80 chars, prefer
+truncating with `…` over splitting into a threaded reply.
 
 ## Step 8 — Persist state
 
@@ -182,11 +180,14 @@ Write `state/last-digest.json`:
   "channel_id": "<review_channel_id>",
   "posted_at": "<iso8601>",
   "rows": [
-    {"row_index": 1, "thread_ts": "...", "reply_ts": "<reply ts>"},
+    {"row_index": 1, "thread_ts": "<slack source thread ts>"},
     ...
   ]
 }
 ```
+(No per-row `reply_ts` — there are no automatic threaded replies. The
+push-now trigger reads user replies under `message_ts` and parses
+`push 1 3 5` etc. against `row_index`.)
 
 Write the rebuilt `state/pending-review.json` (full carryover + new rows).
 
