@@ -1,1 +1,74 @@
-[]
+[
+  {
+    "thread_ts": "1779108076.403949",
+    "channel_id": "C0AJJJ91R25",
+    "channel_name": "understory-revic-shared",
+    "permalink": "https://understorytalk.slack.com/archives/C0AJJJ91R25/p1779108076403949",
+    "summary": "Vilca shared Martech list email copies and proposed 'we can launch' once reviewed — Morgan hasn't approved yet.",
+    "suggested_action": "CREATE",
+    "would_be_list_id": "901113803597",
+    "would_be_list_name": "Claude Inbox",
+    "queued_at": "2026-05-18T15:00:00Z",
+    "reason": "Vilca delivered copies but external approval is pending; will become a clean CREATE once Morgan replies."
+  },
+  {
+    "thread_ts": "1779112129.029849",
+    "channel_id": "C0AEQDS3AQK",
+    "channel_name": "understory-zapierinc-shared",
+    "permalink": "https://understorytalk.slack.com/archives/C0AEQDS3AQK/p1779112129029849",
+    "summary": "Andre asked Vilca to (1) review the 5-18 scripting copies and (2) propose subject-line A/B tests. Vilca engaged but didn't explicitly say yes.",
+    "suggested_action": "CREATE",
+    "would_be_list_id": "901113803597",
+    "would_be_list_name": "Claude Inbox",
+    "queued_at": "2026-05-18T15:00:00Z",
+    "reason": "Clear external ask, but Vilca's reply was a follow-up question rather than an affirmative."
+  },
+  {
+    "thread_ts": "1779112129.029849",
+    "channel_id": "C0AEQDS3AQK",
+    "channel_name": "understory-zapierinc-shared",
+    "permalink": "https://understorytalk.slack.com/archives/C0AEQDS3AQK/p1779127233894609",
+    "summary": "Vilca asked Andre to add the follow-up emails to the 5-18 scripting doc (only the first email was visible). Blocker on Andre's side.",
+    "suggested_action": "CREATE",
+    "would_be_list_id": "901113803597",
+    "would_be_list_name": "Claude Inbox",
+    "queued_at": "2026-05-18T15:00:00Z",
+    "reason": "Reverse direction (Vilca asking external party). Track as a blocker rather than a Vilca commitment."
+  },
+  {
+    "thread_ts": "1778782060.544689",
+    "channel_id": "C0AEQDS3AQK",
+    "channel_name": "understory-zapierinc-shared",
+    "permalink": "https://understorytalk.slack.com/archives/C0AEQDS3AQK/p1778782060544689",
+    "summary": "Galen (Zapier) asked for OutboundSync app access. Natalia tagged Ethan to confirm — still open.",
+    "suggested_action": "CREATE",
+    "would_be_list_id": "901113803597",
+    "would_be_list_name": "Claude Inbox",
+    "queued_at": "2026-05-18T15:00:00Z",
+    "reason": "Blocker on Ethan's side, not directly Vilca's commitment. Confirm whether to track."
+  },
+  {
+    "thread_ts": "1779002420.543639",
+    "channel_id": "C07TRCQKPQX",
+    "channel_name": "internal-gtme",
+    "permalink": "https://understorytalk.slack.com/archives/C07TRCQKPQX/p1779002420543639",
+    "summary": "Andrew asked to be added to the Understory GitHub org (username aosbornee) as Owner. Natalia suggested Tom Parker can do it, but no clear yes yet.",
+    "suggested_action": "CREATE",
+    "would_be_list_id": "901113803597",
+    "would_be_list_name": "Claude Inbox",
+    "queued_at": "2026-05-18T15:00:00Z",
+    "reason": "Internal admin task, not client commitment. Confirm if these should be tracked at all."
+  },
+  {
+    "thread_ts": "1778978753.574099",
+    "channel_id": "C07TRCQKPQX",
+    "channel_name": "internal-gtme",
+    "permalink": "https://understorytalk.slack.com/archives/C07TRCQKPQX/p1778978753574099",
+    "summary": "Imran asked Andrew to drop the 'inboxes' skill file. Andrew replied 'working on a seamless way to share it all' — not a clear yes/ETA.",
+    "suggested_action": "CREATE",
+    "would_be_list_id": "901113803597",
+    "would_be_list_name": "Claude Inbox",
+    "queued_at": "2026-05-18T15:00:00Z",
+    "reason": "Internal task with vague affirmative. Same scope question as item #5."
+  }
+]
