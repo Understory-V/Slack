@@ -50,13 +50,16 @@ For each thread, decide one of CREATE, COMPLETE, or LOW-CONF using this rubric.
 
 ### CREATE (high-confidence)
 All of:
-- An external party (anyone NOT in `internal_teammate_ids` and NOT
-  `my_slack_user_id`) makes a **concrete ask** with a specific deliverable
+- A party makes a **concrete ask** with a specific deliverable
   ("can you send the proposal?", "please review the doc", "we need the deck").
-- Someone on your side (you OR an internal teammate) replies with a **clear
-  affirmative**: "yes", "will do", "on it", "sending now", "by Friday", an
-  explicit date, or "done by EOD".
-- The affirmative is **after** the ask in the thread.
+- Someone else in the thread replies with a **clear affirmative**: "yes",
+  "will do", "on it", "sending now", "by Friday", an explicit date, or
+  "done by EOD".
+- The affirmative is **after** the ask in the thread, and the affirmer is
+  **not the same user** as the asker.
+- Affirmer scope: if `internal_teammate_ids` is `"*"`, any user other than the
+  asker counts. Otherwise, the affirmer must be `my_slack_user_id` or in the
+  `internal_teammate_ids` list.
 
 Extract:
 - `title`: imperative phrasing of the ask, max 80 chars.
@@ -71,8 +74,9 @@ All of:
   via `clickup_filter_tasks` filtered by tag `source:slack`. Find one whose
   description contains a matching slack permalink OR whose title closely
   matches the original ask in this thread.
-- The latest message from your side contains a **delivery signal**: "sent",
-  "done", "shipped", "deployed", "uploaded", "here you go", or includes a
+- The latest message from the *affirmer* (same `internal_teammate_ids`
+  scope as CREATE) contains a **delivery signal**: "sent", "done",
+  "shipped", "deployed", "uploaded", "here you go", or includes a
   file/URL attachment that plausibly satisfies the ask.
 
 Extract:

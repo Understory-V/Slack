@@ -1,16 +1,15 @@
-# Filled in by the bootstrap session — see README.md.
-# Until these are populated, the morning + evening triggers will halt and
-# post a setup-needed message to the review channel.
+# Bootstrapped values for the Slack -> ClickUp daily routine.
 
-# Your Slack user ID (looks like "U01ABCDEFGH"). Used to detect when YOU say "yes".
-my_slack_user_id: ""
+# Your Slack user ID. Used to detect when YOU say "yes".
+my_slack_user_id: "U0AGHPHK8S1"   # @vilca (vilca@understoryagency.com)
 
 # Slack user IDs of internal teammates whose "yes" also counts as a commitment.
-# Leave as [] if you want only your own affirmatives to trigger task creation.
-internal_teammate_ids: []
+# Special value "*" = treat every non-asker in the thread as an internal
+# affirmer (matches "consider everyone else as yes" from setup).
+internal_teammate_ids: "*"
 
 # Slack channel ID for #claude-tasks (the private review channel).
-review_channel_id: ""
+review_channel_id: "C0B4PFDR4EQ"
 
 # ClickUp workspace (team) ID.
 clickup_workspace_id: "9011424132"
